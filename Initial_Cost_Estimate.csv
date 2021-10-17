@@ -1,13 +1,19 @@
-,,,,
-,Service,Instances,Unit Cost,Service Cost
-,Route 53,,,
-,CloudFront,,,
-,S3,,,
-,Internet GW,,,
-,NAT GW,,,
-,ALB,,,
-,NLB,,,
-,Web EC2,,,
-,App EC2,,,
-,Master DB,,,
-,Read Replica DB,,,
+,,,,,
+,Single region = us-east-1 (N. Virginia),,,,
+,"Assumption: A month is considered 30 days so 1 month = 30x24 hours = 720 hours = 43,200 min = 2,593,000 sec",,,,
+,"Assumption: 50,000 users. Each user accesses and uses the service once per day ? 1,500,000 user session per month. Each user session requires 50 requests/queries ?  75,000,000 requests/queries per month   ",,,,
+,Assumption: Each user session generates a storage requirement of 1MB on average   ,,,,
+,,,,,
+,Service,Instances,Unit Cost,Service Cost,Comment
+,Route 53,1,$2,$2,"5,000,000 standard queries per month   "
+,CloudFront,1,$9.25,$9.25,"Number of requests (HTTPS) = 5,000,000
+10 KB per request ? 50,000,000 KB = 50,000 MB = 50 GB"
+,S3,,,,S3 Standard
+,Internet GW,1,$0,$0,
+,NAT GW,,,,
+,ALB,,,,
+,NLB,,,,
+,Web EC2,,,,
+,App EC2,,,,
+,Master DB,,,,
+,Read Replica DB,,,,
