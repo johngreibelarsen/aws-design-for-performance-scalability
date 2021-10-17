@@ -1,0 +1,13 @@
+,,,,
+,Service,Instances,Unit Cost,Service Cost
+,Route 53,,,
+,CloudFront,,,
+,S3,,,
+,Internet GW,,,
+,NAT GW,,,
+,ALB,,,
+,NLB,,,
+,Web EC2,,,
+,App EC2,,,
+,Master DB,,,
+,Read Replica DB,,,
