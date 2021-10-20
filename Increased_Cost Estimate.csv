@@ -1,0 +1,21 @@
+;;;;
+;;;;
+;Service;Instances;Service Cost ($);Comment
+;Route 53;1;36;
+;CloudFront;1;1431;
+;S3;2;150;" S3 Cross-Region Replication to new region
+2 buckets + access point data routing cost 0.0033x2250 + data transfer charge 0.01x2250"
+;Internet GW;1;0;
+;NAT GW;4;148;
+;ALB;2;42;
+;NLB;2;40;
+;Web EC2;3;100;upgraded from t2.micro to t3.medium. Not really needed in standby group until needed, that is, scaling group kicks in. Left as is
+;App EC2;3;191;upgraded from t2.micro to t3.large
+;Multi-AZ DB;1;13412;upgraded from db.m1.large to db.m4.4xlarge + storage increased from 20 to 40 TB
+;Read Replica;;3378;in standby region
+;;;18928;
+;;;1. let's add a NAT GW to each AZ.;
+;;;2. setup DB as a Multi-AZ DB, increase capacity of DB server and storage for better performance and more robust solution;
+;;;3. increase performance of EC2 instances my selecting better performing compute instances, web: t2.micro to t3.medium, app  t2.micro to t3.large;
+;;;4. set-up whole standby region with two AZ and 4 subnets as before. Add web server, app servers and a read replica DB.;
+;;;5. add S3 Cross-Region Replication to new region;
