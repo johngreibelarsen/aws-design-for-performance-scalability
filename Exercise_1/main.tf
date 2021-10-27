@@ -1,5 +1,7 @@
 # TODO: Designate a cloud provider, region, and credentials
 provider "aws" {
+  access_key = "AKIARJFQ6YL76YIAJQIZ"
+  secret_key = "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"
   region = "eu-west-2"  // London
 }
 
@@ -33,7 +35,50 @@ resource "aws_subnet" "udacity-subnet-public-1" {
     }
 }
 
-
 # TODO: provision 4 AWS t2.micro EC2 instances named Udacity T2
+resource "aws_launch_template" "webserver" {
+  image_id = "ami-0dbec48abfe298cab"
+  instance_type = "t2.micro"
+  tag_specifications {
+      resource_type = "instance"
+      tags = {
+          Name = "Udacity T2"
+      }
+  }
+}
+
+resource "aws_autoscaling_group" "asg-webserver" {
+  desired_capacity   = 4
+  max_size           = 16
+  min_size           = 4
+  vpc_zone_identifier = [aws_subnet.udacity-subnet-public-1.id]
+
+  launch_template {
+    id      = aws_launch_template.webserver.id
+    version = "$Latest"
+  }
+}
 
 # TODO: provision 2 m4.large EC2 instances named Udacity M4
+resource "aws_launch_template" "appserver" {
+  image_id = "ami-0dbec48abfe298cab"
+  instance_type = "m4.large"
+  tag_specifications {
+      resource_type = "instance"
+      tags = {
+          Name = "Udacity M4"
+      }
+  }
+}
+
+resource "aws_autoscaling_group" "asg-appserver" {
+  desired_capacity   = 2
+  max_size           = 4
+  min_size           = 2
+  vpc_zone_identifier = [aws_subnet.udacity-subnet-private-1.id]
+
+  launch_template {
+    id      = aws_launch_template.appserver.id
+    version = "$Latest"
+  }
+}
